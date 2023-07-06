@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+body
+  background: #F0F2F5
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+/* Firefox */
+input[type=number]
+  -moz-appearance: textfield
+
+.component, table
+  animation: fadeIn .5s
+
+@keyframes fadeIn
+  0%
+    opacity: 0.7
+  100%
+    opacity: 1
+
+table
+  box-shadow: 5px 5px 10px #9b9b9bbc
+
+.icon-link-hover
+  --bs-icon-link-transform: translate3d(0, -.125rem, 0)
+
+svg
+  margin-left: 5px
+  margin-bottom: 3px
+
+.alert
+  animation: fadeIn .5s
+  padding: 12px 40px 12px 10px 

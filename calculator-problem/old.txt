@@ -1,0 +1,119 @@
+
+    //        private double weightCalculator(String formula, double dimension, double dimensionWeight) {
+//        String[] formulaVariables = formula.split("[-+*/]");
+//        DoubleEvaluator eval = new DoubleEvaluator();
+//        StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
+//        variables.set(formulaVariables[0], dimension);
+//        variables.set(formulaVariables[1], dimensionWeight);
+//        return eval.evaluate(formula, variables);
+//    }
+    private double weightCalculator(String dimensionName, double dimensionValue) {
+        double dimensionWeightPercentage = repoRiskDimension.findById(dimensionName).get().getWeight();
+        String formula = repoRiskCalcLogic.findById(dimensionName + "_weight").get().getFormula();
+        String[] formulaVariables = formula.split("[-+*/]");
+        DoubleEvaluator eval = new DoubleEvaluator();
+        StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
+        variables.set(formulaVariables[0], dimensionValue);
+        variables.set(formulaVariables[1], dimensionWeightPercentage);
+        return eval.evaluate(formula, variables);
+    }
+
+    //        private double calculateInformationSecurityWeight(int information_security) {
+//        double information_security_weight = repoRiskDimension.findById("information_security").get().getWeight();
+//        String formula = repoRiskCalcLogic.findById("info_sec_weight").get().getFormula();
+//        return weightCalculator(formula, information_security, information_security_weight);
+//    }
+//    private double calculateResilienceWeight(int resilience) {
+//        double resilience_weight = repoRiskDimension.findById("resilience").get().getWeight();
+//        String formula = repoRiskCalcLogic.findById("resilience_weight").get().getFormula();
+//        return weightCalculator(formula, resilience, resilience_weight);
+//    }
+//    private double calculateConductWeight(int conduct) {
+//        double conduct_weight = repoRiskDimension.findById("conduct").get().getWeight();
+//        String formula = repoRiskCalcLogic.findById("conduct_weight").get().getFormula();
+//        return weightCalculator(formula, conduct, conduct_weight);
+//    }
+    private double calcCompositeRiskScore(double totalRiskScore, int totalRiskCappedScore) {
+        String formula = repoRiskCalcLogic.findById("composite_risk_score").get().getFormula();
+        DoubleEvaluator eval = new DoubleEvaluator();
+        StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
+        variables.set("total_risk_score", totalRiskScore);
+        variables.set("total_risk_capped_score", (double) totalRiskCappedScore);
+        return eval.evaluate(formula, variables);
+    }
+    @RequestMapping("/getOutput")
+
+
+    public List<OutputData> calculate() {
+
+        List<OutputData> outputTableList = new ArrayList<>();
+        List<CompanyRiskScore> companyRiskScores = repoCompanyRiskScore.findAll();
+        for (CompanyRiskScore company : companyRiskScores) {
+            try {
+                OutputData output = new OutputData();
+                output.setCompanyName(company.getCompanyName());
+                List<Dimensions> dimensions = company.getDimensions();
+                for (Dimensions dimension : dimensions) {
+                    switch (dimension.getDimensionName()) {
+                        case "information_security":
+                            output.setInformationSecurityWeight(
+                                    weightCalculator(dimension.getDimensionName(), dimension.getDimensionValue())
+                            );
+                            break;
+                        case "resilience":
+                            output.setResilienceWeight(
+                                    weightCalculator(dimension.getDimensionName(), dimension.getDimensionValue())
+                            );
+                            break;
+                        case "conduct":
+                            output.setConductWeight(
+                                    weightCalculator(dimension.getDimensionName(), dimension.getDimensionValue())
+                            );
+                            break;
+                    }
+                }
+//                output.setInformationSecurityWeight(
+//                        calculateInformationSecurityWeight(company.getInformationSecurity())
+//                );
+//                output.setResilienceWeight(
+//                        calculateResilienceWeight(company.getResilience())
+//                );
+//                output.setConductWeight(
+//                        calculateConductWeight(company.getConduct())
+//                );
+                output.setTotalRiskScore(
+                        output.getInformationSecurityWeight()
+                                + output.getResilienceWeight()
+                                + output.getConductWeight()
+                );
+                output.setTotalRiskCappedScore(
+                        calculateTotalRiskCappedScore(
+                                Arrays.asList(output.getInformationSecurityWeight(),
+                                        output.getResilienceWeight(),
+                                        output.getConductWeight()
+                                )
+                        )
+                );
+                output.setCompositeRiskScore(
+                        calcCompositeRiskScore(output.getTotalRiskScore(), output.getTotalRiskCappedScore())
+                );
+                outputTableList.add(output);
+                jobStatus.setOutputStatus("SUCCESS");
+
+            } catch (Exception e) {
+                jobStatus.setJobError(e.getMessage());
+                jobStatus.setOutputStatus("FAILED");
+
+                continue;
+            }
+        }
+        jobStatus.setJobDateTime(LocalDateTime.now());
+        repoJobStatus.save(jobStatus);
+        if (outputTableList.size() > 0) {
+            repoOutput.deleteAll();
+            repoOutput.saveAll(outputTableList);
+            logger.info("updated database");
+        }
+        return repoOutput.findAll();
+    }
+

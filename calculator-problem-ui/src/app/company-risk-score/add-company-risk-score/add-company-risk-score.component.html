@@ -1,0 +1,55 @@
+<div class="component">
+  <h2 class="mt-5">Add Company Risk Score</h2>
+  <form [formGroup]="addCompanyRiskScoreForm" class="mt-4" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <div class="row">
+        <div class="col-sm-2 ">
+          <label class="h6" for="floatingInput">Company name:</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="floatingInput" formControlName="companyName">
+          <div class="text-danger" *ngIf="validCompanyName?.invalid && validCompanyName?.touched">
+            <small>Company name is required</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h6>Dimensions:</h6>
+    <div class="mt-3" formArrayName="dimensions">
+      <div class="row" *ngFor="let quantity of getQuantities(); let i = index;" formGroupName="{{i}}">
+        <div class="col-auto btn-remove">
+          <a type="button" (click)="removeDimension(i)" class="text-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+            </svg>
+          </a>
+        </div>
+        <div class="col-auto">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="dimensionName" placeholder="Name">
+            <label for="floatingInput">Name</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" formControlName="dimensionValue" placeholder="Value">
+            <label for="floatingInput">Value</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a type="button" class="text-success" (click)="addDimension()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+      </svg>
+    </a>
+    <br>
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="addCompanyRiskScoreForm.invalid">Submit</button>
+    <button type="button" class="btn btn-danger mt-4 mx-2" (click)="navigateToCompanyRiskScoreDetails()">Cancel</button>
+  </form>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show d-inline-block mt-4" *ngIf="isAlreadyPresent" role="alert">
+  <strong>Error!</strong> Another company with same name is already present.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>

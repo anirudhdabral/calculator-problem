@@ -1,0 +1,95 @@
+<!-- <div class="component">
+    <h2 class="mt-5">Edit Risk Calculation Logic details</h2>
+    <form class="mt-4" [formGroup]="updateRiskCalcLogicForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Element Name</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" readonly value="{{existingElementName}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Formula</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" formControlName="formula" value="{{existingFormula}}">
+          <div class="text-danger" *ngIf="validFormula?.invalid && validFormula?.touched">
+            <small>Formula at max be 100 characters</small>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary my-1" [disabled]="updateRiskCalcLogicForm.invalid">Submit</button>
+      <button type="button" class="btn btn-danger my-1 mx-2" (click)="navigateToRiskCalcLogicDetails()">Cancel</button>
+    </form>
+  </div> -->
+<div class="component">
+  <h2 class="mt-5">Edit Risk Calculation Logic</h2>
+  <form class="mt-4" (ngSubmit)="onSubmit()">
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label">Element:</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" name="id" readonly value="{{existingElementName}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label">Existing formula:</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" name="id" readonly value="{{existingFormula}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label">New formula:</label>
+      <div class="col-sm-4">
+        <select class="form-select" (change)="onItemSelected($event)" [disabled]="!isVariableListActive">
+          <option selected value="">Select variable</option>
+          <option value="min-max">Add min or max</option>
+          <option *ngFor="let variable of variables" [value]="variable">{{variable}}</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <select class="form-select" (change)="onItemSelected($event)" [disabled]="!isOperatorListActive">
+          <option selected value="">Select operator</option>
+          <option *ngFor="let operator of operators" [value]="operator">{{operator}}</option>
+        </select>
+      </div>
+      <button class="btn btn-success col-auto" (click)="handlePushButtonClick()" [disabled]="!isPushButtonActive">
+        Push
+        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+        </svg>
+      </button>
+    </div>
+    <div class="mb-3 row" *ngIf="isMinMaxFieldVisible">
+      <div class="col-sm-auto">
+        <select class="form-select" (change)="onMinMaxChoiceSelected($event)">
+          <option selected value="">min/max</option>
+          <option value="min">min</option>
+          <option value="max">max</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-select company-list" (change)="onVariableOneSelected($event)">
+          <option selected value="">Variable 1</option>
+          <option *ngFor="let variable of variables" [value]="variable">{{variable}}</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-select company-list" (change)="onVariableTwoSelected($event)">
+          <option selected value="">Variable 2</option>
+          <option *ngFor="let variable of variables" [value]="variable">{{variable}}</option>
+        </select>
+      </div>
+      <a class="col-sm-1 text-success mt-1" type="button" (click)="handleAddMinMaxClick()" *ngIf="isVariableOneSelected && isVariableTwoSelected && isMinMaxChoiceSelected">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+      </a>
+    </div>
+    <div class="mb-3 col-sm-9">
+      <textarea class="form-control" readonly rows="5" value="{{formula}}"></textarea>
+      <div class="text-danger" *ngIf="formula.length == 0">
+        <small>Formula cannot be empty</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary my-1" [disabled]="(formula.length==0) || !isOperatorListActive">Submit</button>
+    <button type="button" class="btn btn-danger my-1 mx-2" (click)="navigateToRiskCalcLogicDetails()">Cancel</button>
+  </form>
+</div>

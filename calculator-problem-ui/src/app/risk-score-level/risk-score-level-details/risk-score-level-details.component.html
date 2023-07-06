@@ -1,0 +1,27 @@
+<div class="component">
+  <div class="nav justify-content-between mt-5">
+    <h2>Risk Score Level details</h2>
+    <button type="button" class="btn btn-primary" (click)="navigateToAddRiskScoreLevel()">Add score level</button>
+  </div>
+  <table class="table table-light table-bordered table-hover table-responsive text-nowrap mt-4">
+    <thead>
+      <tr class="table-dark">
+        <th>Score</th>
+        <th>Level</th>
+        <th class="text-center col-sm-1">Action</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let item of riskScoreLevelList">
+        <td>{{item.score}}</td>
+        <td>{{item.level}}</td>
+        <td>
+          <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-outline-success" (click)="navigateToEditRiskScoreLevel(item.score)">Edit</button>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteRiskScoreLevel(item.score)">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

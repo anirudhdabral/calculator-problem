@@ -1,0 +1,35 @@
+<div class="component">
+  <h2 class="mt-5">Add Score Cap</h2>
+  <form class="mt-4" [formGroup]="addScoreCapForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Condition</label>
+      <div class="col-sm-2">
+        <select class="form-select company-list" formControlName="noOfRisk">
+          <option class="text-muted" selected value="invalid">No. of risk</option>
+          <option *ngFor="let item of noOfRiskList" [value]="item">{{item}}</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <select class="form-select company-list" formControlName="riskLevel">
+          <option class="text-muted" selected value="invalid">Select risk level</option>
+          <option *ngFor="let item of riskLevelList" [value]="item">{{item}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputPassword" class="col-sm-3 col-form-label">Total Risk Capped Score</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" formControlName="totalRiskCappedScore">
+        <div class="text-danger" *ngIf="validTotalRiskCappedScore?.invalid && validTotalRiskCappedScore?.touched">
+          <small>Score must be between 0-100</small>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary my-1" [disabled]="addScoreCapForm.invalid">Submit</button>
+    <button type="button" class="btn btn-danger my-1 mx-2" (click)="navigateToScoreCapDetails()">Cancel</button>
+  </form>
+  <div class="alert alert-danger alert-dismissible fade show d-inline-block mt-4" *ngIf="isAlreadyPresent" role="alert">
+    <strong>Error!</strong> Another score-cap with same name is already present.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>

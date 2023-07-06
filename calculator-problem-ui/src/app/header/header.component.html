@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Risk Calculator</span>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="'home'">
+            Output details
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Show details
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="'companyRiskScoreDetails'">Company risk score</a></li>
+            <li><a class="dropdown-item" [routerLink]="'riskDimensionDetails'">Risk dimension</a></li>
+            <li><a class="dropdown-item" [routerLink]="'riskScoreLevelDetails'">Risk score level</a></li>
+            <li><a class="dropdown-item" [routerLink]="'riskCalcLogicDetails'">Risk calculation logic</a></li>
+            <li><a class="dropdown-item" [routerLink]="'scoreCapDetails'">Score cap</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Add new
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="'addCompanyRiskScore'">Company risk score</a></li>
+            <li><a class="dropdown-item" [routerLink]="'addRiskScoreLevel'">Risk score level</a></li>
+            <li><a class="dropdown-item" [routerLink]="'addRiskCalcLogic'">Risk calculation logic</a></li>
+            <li><a class="dropdown-item" [routerLink]="'addScoreCap'">Score cap</a></li>
+          </ul>
+        </li>
+
+      </ul>
+      <div class="nav-item text-light">
+        <a class="nav-link active" aria-current="page" [routerLink]="'job-status'">
+          Job Status
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+            <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
