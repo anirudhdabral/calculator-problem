@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-
 @SpringBootApplication
 @EnableScheduling
 public class CalculatorProblemApplication {

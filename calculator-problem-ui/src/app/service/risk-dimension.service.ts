@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RiskDimension } from '../model/RiskDimension';
+import uri_string from '../model/URI';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RiskDimensionService {
-  uri = "http://localhost:5055"
+  uri = uri_string
 
   constructor(private http: HttpClient) { }
 

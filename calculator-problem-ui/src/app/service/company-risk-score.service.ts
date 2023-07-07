@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CompanyRiskScore } from '../model/CompanyRiskScore';
+import uri_string from '../model/URI';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyRiskScoreService {
-  uri = "http://localhost:5055"
+  uri = uri_string
 
   constructor(private http: HttpClient) { }
 

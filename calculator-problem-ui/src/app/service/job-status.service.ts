@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobStatus } from '../model/JobStatus';
+import uri_string from '../model/URI';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobStatusService {
-  uri = "http://localhost:5055"
+  uri = uri_string
 
   constructor(private http: HttpClient) { }
 

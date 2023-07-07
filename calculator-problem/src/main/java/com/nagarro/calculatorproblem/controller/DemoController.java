@@ -14,10 +14,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class DemoController {
-    public DemoController() {
-        super();
-    }
-
     @Autowired
     private CompanyRiskScoreRepository repoCRS;
 

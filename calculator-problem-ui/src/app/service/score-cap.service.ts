@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScoreCap } from '../model/ScoreCap';
+import uri_string from '../model/URI';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoreCapService {
-  uri = "http://localhost:5055"
+  uri = uri_string
 
   constructor(private http: HttpClient) { }
 
