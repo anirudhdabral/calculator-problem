@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 public class DemoController {
     @Autowired
     private CompanyRiskScoreRepository repoCRS;

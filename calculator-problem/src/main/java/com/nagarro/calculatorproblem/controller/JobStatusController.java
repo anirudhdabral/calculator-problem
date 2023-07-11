@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 public class JobStatusController {
     @Autowired
     private JobStatusServiceImpl service;
